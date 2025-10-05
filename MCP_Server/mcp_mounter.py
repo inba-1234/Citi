@@ -3,7 +3,7 @@ import uvicorn
 from fastapi import FastAPI
 from Evaluation_Server import mcp as evaluate_mcp
 from Database_Server import mcp as db_mcp
-
+from Simple_Server import mcp as math_mcp
 import os
 
 
@@ -14,6 +14,7 @@ async def lifespan(app: FastAPI):
         # add mcps here
         await stack.enter_async_context(evaluate_mcp.session_manager.run())
         await stack.enter_async_context(db_mcp.session_manager.run())
+        await stack.enter_async_context(math_mcp.session_manager.run())
         yield
 
 
@@ -22,6 +23,7 @@ app = FastAPI(lifespan=lifespan)
 # Mount the MCP apps
 app.mount("/evaluate", evaluate_mcp.streamable_http_app())
 app.mount("/db", db_mcp.streamable_http_app())
+app.mount("/math", math_mcp.streamable_http_app())
 
 PORT = os.environ.get("PORT", 10000)
 
