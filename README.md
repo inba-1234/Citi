@@ -71,7 +71,14 @@ In a separate terminal window:
 ```bash
 npx @modelcontextprotocol/inspector
 ```
+### Starting the MCP Client
+```powershell
+# Navigate to MCP_Client directory
+cd MCP_Client
 
+# Run the MCP server
+fastapi run client.py
+```
 
 
 
